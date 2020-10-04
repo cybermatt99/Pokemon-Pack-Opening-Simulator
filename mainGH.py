@@ -45,7 +45,7 @@ blankCard = pygame.transform.scale(blankPack, (cardSizeX, cardSizeY))
 cardBack = pygame.image.load("./cardBacks/cardBacks/cardback.png")
 cardBack = pygame.transform.scale(cardBack, (cardSizeX, cardSizeY))
 
-cardBackHL = pygame.image.load("./cardBacks/cardBacks/Highlight.png")
+cardBackHL = pygame.image.load("./cardBacks/cardBacks/cardBackHighlight.png")
 cardBackHL = pygame.transform.scale(cardBackHL, (cardSizeX, cardSizeY))
 
 background_image = pygame.image.load('./backgrounds/backgrounds/background.png')
