@@ -11,6 +11,14 @@ in which you downloaded everything.
 
 Then run 'python main.py' and that should do the trick!
 
+BY THE WAY
+If the background noise seems kinda weird and wonky, that's probably due to the
+fact that I had to compress it just to get it to upload to GitHub (still
+trying to figure that out). In the meantime, here is a link to the true
+audio file on Google Drive - add this to your /sounds folder and you're all set!
+https://drive.google.com/file/d/1sJvZgMfhSBjOSFwOuRoNMBaZ1Qow0Fgq/view?usp=sharing
+
+
 CURRENTLY IMPLEMENTED FEATURES:
 
 --Generate 11 cards from Pokemon Base Set in the original ordering
