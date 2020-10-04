@@ -3,13 +3,13 @@ Using PyGame I created a Pokemon Pack Opening Simulator with a really clean GUI.
 
 First things first, there are a LOT of zip files here (to make uploading easier).
 Download and unzip all of these files into one directory.
-If you have Python 3 and PyGame installed, you should be able to double-click the main.py
+If you have Python 3 and PyGame installed, you should be able to double-click the mainGH.py
 file and start running the program.
 
 If that doesn't work for you, navigate to your command line, and cd to the directory
 in which you downloaded everything.
 
-Then run 'python main.py' and that should do the trick!
+Then run 'python mainGH.py' and that should do the trick!
 
 BY THE WAY
 If the background noise seems kinda weird and wonky, that's probably due to the
@@ -18,6 +18,12 @@ trying to figure that out). In the meantime, here is a link to the true
 audio file on Google Drive - add this to your /sounds folder and you're all set!
 https://drive.google.com/file/d/1sJvZgMfhSBjOSFwOuRoNMBaZ1Qow0Fgq/view?usp=sharing
 
+The reason there is a mainGH.py file and a main.py file is because somewhere
+along the way, whether through my compression methods or the upload/download
+to Github the file folders that store all of the assets have been doubled up.
+So 'sounds/soundtrack.mp3' has become 'sounds/sounds/soundtrack.mp3'. Until
+I can figure out a solution to this just use the mainGH.py file and it should
+work fine.
 
 CURRENTLY IMPLEMENTED FEATURES:
 
