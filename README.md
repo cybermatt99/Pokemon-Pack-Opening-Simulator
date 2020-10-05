@@ -3,6 +3,11 @@ Using PyGame I created a Pokemon Pack Opening Simulator with a really clean GUI.
 
 First things first, there are a LOT of zip files here (to make uploading easier).
 Download and unzip all of these files into one directory.
+BE CAREFUL WHEN DOING THIS!!!
+If you use 7zip make sure you select 'Extract Here' instead of 'Extract Files'.
+Otherwise it will create an extra file folder of the same name and you will have
+to redo the file extraction. This will cause the program not to work so be careful!
+
 If you have Python 3 and PyGame installed, you should be able to double-click the main.py
 file and start running the program.
 
