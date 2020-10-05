@@ -1,9 +1,8 @@
-#Pokemon Pack Opening Simulator - main.py
-#By Matt Thibodeau 2020
-#https://github.com/matt-thibodeau/Pokemon-Pack-Opening-Simulator
+# Pokemon Pack Opening Simulator - main.py
+# By Matt Thibodeau 2020
+# https://github.com/matt-thibodeau/Pokemon-Pack-Opening-Simulator
 
 import pygame, sys, os, random
-
 
 mainClock = pygame.time.Clock()
 from pygame.locals import *
@@ -19,6 +18,9 @@ packSizeY = 500
 
 cardSizeX = 126
 cardSizeY = 176
+
+largeCardSizeX = 315
+largeCardSizeY = 440
 
 screen = pygame.display.set_mode((display_width, display_height), 0, 32)
 
@@ -48,6 +50,9 @@ cardBack = pygame.transform.scale(cardBack, (cardSizeX, cardSizeY))
 cardBackHL = pygame.image.load("./cardBacks/cardbackHighlight.png")
 cardBackHL = pygame.transform.scale(cardBackHL, (cardSizeX, cardSizeY))
 
+largeCard = blankPack
+largeCard = pygame.transform.scale(blankPack, (largeCardSizeX, largeCardSizeY))
+
 background_image = pygame.image.load('./backgrounds/background.png')
 woodenBackground = pygame.image.load('./backgrounds/woodenBackground.png')
 woodenBackground = pygame.transform.scale(woodenBackground, (1024, 768))
@@ -61,8 +66,9 @@ font = pygame.font.Font('./fonts/PocketMonk-15ze.ttf', 50)
 
 # Background music. I set it to be a little quieter so you could still hear the pack opening
 pygame.mixer.music.load("./sounds/soundtrack.mp3")
-pygame.mixer.music.play(-1,0.0)
+pygame.mixer.music.play(-1, 0.0)
 pygame.mixer.music.set_volume(0.25)
+
 
 # draw text function makes drawing text a bit easier
 def draw_text(text, font, color, surface, x, y):
@@ -71,15 +77,17 @@ def draw_text(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
+
 # by default click should be false, otherwise we get weird issues
 click = False
+
 
 # This is the main menu window
 def main_menu():
     while True:
 
         screen.fill((0, 0, 0))
-        screen.blit(background_image, [0,0])
+        screen.blit(background_image, [0, 0])
         draw_text('Main Menu', font, (255, 255, 255), screen, 20, 20)
 
         # check for mouse location
@@ -128,7 +136,6 @@ def main_menu():
 
 # This is the main game program where everything really happens
 def game():
-
     # Default declarations - things I don't want changed every frame
     currentPackImg = blankPack
     currentCards = []
@@ -138,6 +145,10 @@ def game():
     cardLocations = []
     cardNumList = []
     packOpeningSound = pygame.mixer.Sound('./sounds/packOpen.wav')
+    holoSound = pygame.mixer.Sound('./sounds/holoSound.wav')
+    largeCard = blankPack
+    holo = False
+    holoInPack = False
 
     # Set all cards in currentCards to blank cards
     for x in range(11):
@@ -148,6 +159,7 @@ def game():
         cardNumList.append(x)
 
     click = False
+    rightclick = False
 
     # Main game loop
     running = True
@@ -168,8 +180,16 @@ def game():
         mx, my = pygame.mouse.get_pos()
 
         # button definition
-        button_1 = pygame.Rect(display_width * 0.05, display_height * 0.5, 200, 50)
-        button_2 = pygame.Rect(display_width * 0.05, display_height * 0.5, 200, 50)
+        newPackButton = pygame.Rect(display_width * 0.05, display_height * 0.4, 200, 50)
+        flipAllButton = pygame.Rect(display_width * 0.05, display_height * 0.5, 200, 50)
+
+        # button rendering
+        pygame.draw.rect(screen, (255, 0, 0), newPackButton)
+        pygame.draw.rect(screen, (255, 0, 0), flipAllButton)
+
+        # Text for the button
+        draw_text('New Pack', font, (255, 255, 0), screen, display_width * 0.055, display_height * 0.4)
+        draw_text('Flip All', font, (255, 255, 0), screen, display_width * 0.07, display_height * 0.5)
 
         # setting card locations
         # Unfortunately this is hard-coded in, will need to be refactored at some point
@@ -195,7 +215,7 @@ def game():
 
         # New Pack Button
         # if mouse is over button1
-        if button_1.collidepoint((mx, my)):
+        if newPackButton.collidepoint((mx, my)):
             # and it is clicked
             if click:
                 # the current pack image becomes whatever the generate_pack() function spits out
@@ -206,6 +226,9 @@ def game():
                 # finally we generate a card number list and store that for later
                 cardNumList = getCardNums()
                 print(cardNumList)
+                holoInPack = False
+                if largeCard != blankPack:
+                    largeCard = blankPack
 
         # If you hover over the pack itself
         if packImgRect.collidepoint((mx, my)):
@@ -226,6 +249,17 @@ def game():
                     for x in range(11):
                         click = False
                         currentCards[x] = cardBack
+
+        if flipAllButton.collidepoint((mx, my)):
+            if click:
+                for i in range(11):
+                    if currentCards[i] == cardBack or currentCards[i] == cardBackHL:
+                        newCard = getCard(cardNumList, i)
+                        currentCards[i] = newCard[0]
+                        holo = newCard[1]
+                        if holo:
+                            holoInPack = True
+                            pygame.mixer.Sound.play(holoSound)
 
         # This little guy makes sure that when you hover over a card
         # and the card back is displayed, the card back is highlighted
@@ -251,16 +285,33 @@ def game():
             if cardLocations[x].collidepoint((mx, my)):
                 if click:
                     if currentPackImg == blankPack:
-                        newCard = getCard(cardNumList, x)
-                        currentCards[x] = newCard
+                        if currentCards[x] == cardBackHL or currentCards[x] == cardBack:
+                            newCard= getCard(cardNumList, x)
+                            actualCard = newCard[0]
+                            holo = newCard[1]
+                            if holo:
+                                holoInPack = True
+                                pygame.mixer.Sound.play(holoSound)
+                            currentCards[x] = actualCard
+                            click = False
 
-        # button rendering
-        pygame.draw.rect(screen, (255, 0, 0), button_1)
-        # pygame.draw.rect(screen, (250, 0, 0), button_2)
+        largeCardRect = pygame.Rect(display_width * 0.4, display_height * 0.1, largeCardSizeX, largeCardSizeY)
+        screen.blit(largeCard, largeCardRect)
 
-        # Text for the button
-        draw_text('New Pack', font, (255, 255, 0), screen, display_width * 0.05, display_height * 0.5)
-        # draw_text('Open Pack', font, (255, 255, 0), screen, display_width * 0.05, display_height * 0.5)
+        for x in range(11):
+            if cardLocations[x].collidepoint((mx, my)):
+                if currentPackImg == blankPack:
+                    if currentCards[x] != blankPack and currentCards[x] != cardBack and currentCards[x] != cardBackHL:
+                        if largeCard == blankPack:
+                            if click:
+                                largeCard = getLargeCard(cardNumList, x, holoInPack)
+                                click = False
+
+        if largeCardRect.collidepoint((mx, my)) or not largeCardRect.collidepoint((mx, my)):
+            if largeCard != blankPack:
+                if click:
+                    largeCard = blankPack
+                    click = False
 
         # I probably have this in here too many times but
         # its nice to make sure that its working
@@ -277,9 +328,12 @@ def game():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+                if event.button == 3:
+                    rightclick = True
 
         pygame.display.update()
         mainClock.tick(60)
+
 
 # The infamous getCard function!
 # It receives the list of numbers generated by the getCardNums function
@@ -295,33 +349,72 @@ def getCard(cardList, x):
                 print('common')
                 card = pygame.image.load('./cardImages/smallCards/common/common(' + str(num) + ').jpg')
                 card = pygame.transform.scale(card, (cardSizeX, cardSizeY))
-                return card
+                return card, False
 
             else:
                 print('energy')
                 card = pygame.image.load('./cardImages/smallCards/energy/energy(' + str(num) + ').jpg')
                 card = pygame.transform.scale(card, (cardSizeX, cardSizeY))
-                return card
+                return card, False
         else:
             # Worth noting. Holo Rares have a 1 in 4 chance of appearing
-            holoChance = random.randint(1, 4)
-            if holoChance == 4:
+            holoChance = random.randint(1, 3)
+            if holoChance == 3:
                 print('holo rare')
                 card = pygame.image.load('./cardImages/smallCards/holo/holo(' + str(num) + ').jpg')
                 card = pygame.transform.scale(card, (cardSizeX, cardSizeY))
-                return card
+                return card, True
 
             else:
                 print('rare')
                 card = pygame.image.load('./cardImages/smallCards/rare/rare(' + str(num) + ').jpg')
                 card = pygame.transform.scale(card, (cardSizeX, cardSizeY))
-                return card
+                return card, False
 
     else:
         print('uncommon')
         card = pygame.image.load('./cardImages/smallCards/uncommon/uncommon(' + str(num) + ').jpg')
         card = pygame.transform.scale(card, (cardSizeX, cardSizeY))
+        return card, False
+
+
+def getLargeCard(cardList, x, holo):
+    num = cardList[x]
+
+    if x < 8:
+        if x < 7:
+            if x < 5:
+                print('common')
+                card = pygame.image.load('./cardImages/largeCards/common/common(' + str(num) + ').jpg')
+                card = pygame.transform.scale(card, (largeCardSizeX, largeCardSizeY))
+                return card
+
+            else:
+                print('energy')
+                card = pygame.image.load('./cardImages/largeCards/energy/energy(' + str(num) + ').jpg')
+                card = pygame.transform.scale(card, (largeCardSizeX, largeCardSizeY))
+                return card
+        else:
+            # Worth noting. Holo Rares have a 1 in 4 chance of appearing
+
+            if holo == True:
+                print('holo rare')
+                card = pygame.image.load('./cardImages/largeCards/holo/holo(' + str(num) + ').jpg')
+                card = pygame.transform.scale(card, (largeCardSizeX, largeCardSizeY))
+                return card
+
+            else:
+                print('rare')
+                card = pygame.image.load('./cardImages/largeCards/rare/rare(' + str(num) + ').jpg')
+                card = pygame.transform.scale(card, (largeCardSizeX, largeCardSizeY))
+                return card
+
+    else:
+        print('uncommon')
+        card = pygame.image.load('./cardImages/largeCards/uncommon/uncommon(' + str(num) + ').jpg')
+        card = pygame.transform.scale(card, (largeCardSizeX, largeCardSizeY))
         return card
+
 
 # The getCardNums function
 # It creates a cardlist and runs through several iterations
@@ -386,6 +479,7 @@ def getCardNums():
     print(cardList)
     return cardList
 
+
 # The generate_pack() function is simple
 # Pick a number between 0 and 2 and spit out
 # a pack based on the number
@@ -397,6 +491,7 @@ def generate_pack():
         return blastoisePack
     if packArtNum == 2:
         return venusaurPack
+
 
 # options doesnt really do anything yet but here it is
 def options():
