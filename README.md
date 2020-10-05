@@ -55,6 +55,8 @@ NOW YOU CAN ACTUALLY READ IT! Left click again to exit this feature
 
 PLANNED FEATURES:
 
+--The "Card Trick", putting the rarest card at the end (and adding to the suspense!)
+
 --The ability to select additional sets (This will take quite some time to implement!)
 
 --Portfolio to keep track of all of your pulled cards
@@ -66,8 +68,6 @@ PLANNED FEATURES:
 --Current prices of cards displayed near them
 
 --A gallery of all the cards
-
---Ability to click on a card and zoom in to read it better
 
 --Information about all of the artists
 
