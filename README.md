@@ -11,10 +11,15 @@ to redo the file extraction. This will cause the program not to work so be caref
 If you have Python 3 and PyGame installed, you should be able to double-click the main.py
 file and start running the program.
 
+If you do not have Python and Pygame installed, follow the instructions 
+here: https://www.python.org/
+and here: https://www.pygame.org/wiki/GettingStarted and you should be good to go in no time!
+They are useful programs to have either way.
+
 If that doesn't work for you, navigate to your command line, and cd to the directory
 in which you downloaded everything.
 
-Then run 'python mainGH.py' and that should do the trick!
+Then run 'python main.py' and that should do the trick!
 
 BY THE WAY
 If the background noise seems kinda weird and wonky, that's probably due to the
