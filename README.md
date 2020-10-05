@@ -16,17 +16,21 @@ here: https://www.python.org/
 and here: https://www.pygame.org/wiki/GettingStarted and you should be good to go in no time!
 They are useful programs to have either way.
 
-If that doesn't work for you, navigate to your command line, and cd to the directory
+If the double clicking doesn't seem to work for you, navigate to your command line, and cd to the directory
 in which you downloaded everything.
 
-Then run 'python main.py' and that should do the trick!
+Then run 'python main.py' and that should do the trick! Send me a message if there are any errors
+that show and I will do my best to help.
 
 BY THE WAY
-If the background noise seems kinda weird and wonky, that's probably due to the
-fact that I had to compress it just to get it to upload to GitHub (still
-trying to figure that out). In the meantime, here is a link to the true
-audio file on Google Drive - add this to your /sounds folder and you're all set!
+If something goes wrong with the background noise or it sounds weird or wonky,
+that may be an effect of the file compression. If that happens, here is the link to 
+the full song:
 https://drive.google.com/file/d/1sJvZgMfhSBjOSFwOuRoNMBaZ1Qow0Fgq/view?usp=sharing
+Plus you might just be interested in it because its so darn catchy!
+This is the theme from the Pokemon Trading Card Game from the Game Boy Advance
+all the way back in the year 2000. What a nostalgic track! I thought it would be nice
+to honor that legendary game here by borrowing its soundtrack. I'm sure it won't mind.
 
 CURRENTLY IMPLEMENTED FEATURES:
 
@@ -41,6 +45,13 @@ three: Venusaur, Blastoise, and Charizard
 --Added in a pack ripping sound when you click on the booster pack
 
 --Tasteful background images for the Main Menu and Pack Opening Menu
+
+--Flip All button flips all or any remaining cards in one fell swoop!
+
+--Epic little jingle when you pull a Holographic card
+
+--Left click on any front-side-up card and you can see a zoomed in version of it... 
+NOW YOU CAN ACTUALLY READ IT! Left click again to exit this feature
 
 PLANNED FEATURES:
 
@@ -65,5 +76,3 @@ PLANNED FEATURES:
 --Possible card of the day feature? This would check the current date
 and choose from a list of my favorite cards with a brief bio
 
---Fix the weird distorted audio file (basically figure out how to upload
-Github file > 25mb
