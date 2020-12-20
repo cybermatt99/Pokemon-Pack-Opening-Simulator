@@ -1,6 +1,10 @@
 # Pokemon-Pack-Opening-Simulator
 Using PyGame I created a Pokemon Pack Opening Simulator with a really clean GUI.
 
+![Main Menu](https://i.ibb.co/TwP0QGC/Screenshot-2020-12-19-190604.jpg)
+![Pack Open](https://i.ibb.co/b3PcDnx/Screenshot-2020-12-19-190642.jpg)
+![Cards](https://i.ibb.co/drYwQjX/Screenshot-2020-12-19-190707.jpg)
+
 First things first, there are a LOT of zip files here (to make uploading easier).
 Download and unzip all of these files into one directory.
 BE CAREFUL WHEN DOING THIS!!!
